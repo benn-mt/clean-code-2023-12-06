@@ -10,6 +10,7 @@ class Quantity{
 }
 
 const TEASPOON = new Object();
+const TABLESPOON = new Object();
 TEASPOON.s = (amount) => new Quantity(amount, TEASPOON);
 
-module.exports = {Quantity, TEASPOON}
+module.exports = {Quantity, TEASPOON, TABLESPOON}
