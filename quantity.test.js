@@ -38,4 +38,12 @@ describe ('Quantity objects....', () => {
         expect(GALLON.s(1).equals(TEASPOON.s(4*2*2*8*2*3))).toBe(true);
         expect(TEASPOON.s(4*2*2*8*2*3).equals(GALLON.s(1))).toBe(true);
     })
+
+    test('Can Add quantities', () => {
+        expect(TEASPOON.s(1).add(TEASPOON.s(1)).equals(TEASPOON.s(2))).toBe(true);
+        expect(TEASPOON.s(2).add(TEASPOON.s(3)).equals(TEASPOON.s(5))).toBe(true);
+        expect(TABLESPOON.s(4).add(TABLESPOON.s(5)).equals(TABLESPOON.s(9))).toBe(true);
+        expect(TEASPOON.s(1).add(TABLESPOON.s(1)).equals(TEASPOON.s(4))).toBe(true);
+        expect(GALLON.s(1).add(QUART.s(4)).equals(PINT.s(16))).toBe(true);
+    })
 })

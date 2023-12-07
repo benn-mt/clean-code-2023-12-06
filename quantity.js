@@ -1,19 +1,19 @@
 class Unit{
-    constructor(ratioToBaseUnit = 1, baseUnit){
-        this._ratioToBaseUnit = ratioToBaseUnit;
-        this._baseUnit = baseUnit;
+    constructor(relativeRatio = 1, relativeUnit){
+        if (relativeUnit){
+            this._ratioToBaseUnit = relativeRatio * relativeUnit._ratioToBaseUnit;
+            this._baseUnit = relativeUnit._baseUnit;
+        } else {
+            this._ratioToBaseUnit = relativeRatio;
+        }
     }
 
     s(amount){
         return new Quantity(amount, this)
     }
 
-    amountInBaseUnit(amount){
-        if (this._baseUnit == undefined) {
-            return amount * this._ratioToBaseUnit;
-        }
-
-        return this._baseUnit.amountInBaseUnit(amount*this._ratioToBaseUnit);
+    convertedAmount(otherAmount, otherUnit){
+        return otherAmount * otherUnit._ratioToBaseUnit / this._ratioToBaseUnit;
     }
 }
 
@@ -24,7 +24,11 @@ class Quantity{
     }
 
     equals(other){
-        return this._unit.amountInBaseUnit(this._amount) == other._unit.amountInBaseUnit(other._amount)
+        return this._amount == this._unit.convertedAmount(other._amount, other._unit)
+    }
+
+    add(other){
+        return new Quantity(this._amount + this._unit.convertedAmount(other._amount, other._unit), this._unit);
     }
 }
 
