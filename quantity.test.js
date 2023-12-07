@@ -1,4 +1,5 @@
-const {Quantity, TEASPOON, TABLESPOON, OUNCE, CUP, PINT, QUART, GALLON} = require("./quantity");
+const {Quantity} = require("./quantity");
+const {TEASPOON, TABLESPOON, OUNCE, CUP, PINT, QUART, GALLON, INCH, FOOT, YARD, FURLONG, MILE} = require("./unit");
 
 describe ('Quantity objects....', () => {
     test('are equal when quantity and unity match', () => {
@@ -45,5 +46,19 @@ describe ('Quantity objects....', () => {
         expect(TABLESPOON.s(4).add(TABLESPOON.s(5)).equals(TABLESPOON.s(9))).toBe(true);
         expect(TEASPOON.s(1).add(TABLESPOON.s(1)).equals(TEASPOON.s(4))).toBe(true);
         expect(GALLON.s(1).add(QUART.s(4)).equals(PINT.s(16))).toBe(true);
+
+        expect(MILE.s(1).add(FURLONG.s(4)).equals(FURLONG.s(12))).toBe(true);
+    })
+
+    test('Can not add incompatible units', () => {
+        expect(() => TEASPOON.s(1).add(INCH.es(1))).toThrow(Error);
+        expect(() => GALLON.s(1).add(MILE.s(1))).toThrow(Error);
+    })
+
+    test('Lengths equality', () => {
+        expect(FOOT.s(1).equals(INCH.es(12))).toBe(true);
+        expect(YARD.s(1).equals(FOOT.s(3))).toBe(true);
+        expect(FURLONG.s(1).equals(YARD.s(220))).toBe(true);
+        expect(MILE.s(1).equals(FURLONG.s(8))).toBe(true);
     })
 })
